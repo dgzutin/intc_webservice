@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Parsing an XML document</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="jumbotron-narrow.css" rel="stylesheet">
+    <script src="bookstore.js"></script>
+</head>
+<body>
+
+<div class="container" id="my_title"><h2>My Book Catalogue</h2></div>
+<div class="container">
+
+    <ul class="nav nav-pills">
+        <a href="showBooks.html"><button type="button" class="btn btn-primary">My catalogue</button></a>
+        <a href="addBook.html"><button type="button" class="btn btn-primary">Add new Book</button></a>
+    </ul>
+
+        <fieldset class="form-group">
+            <label for="titleInput">Title</label>
+            <input type="text" class="form-control" id="titleInput" placeholder="Book Title">
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="authorInput">Author</label>
+            <input type="text" class="form-control" id="authorInput" placeholder="Another input">
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="isbnInput">ISBN</label>
+            <input type="text" class="form-control" id="isbnInput" placeholder="Another input">
+        </fieldset>
+        <button onclick="addBook()" class="btn btn-primary">Submit</button>
+
+</div>
+
+</body>
+</html>
