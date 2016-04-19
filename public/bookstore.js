@@ -1,6 +1,7 @@
 /**
  * Created by garbi on 18.04.16.
  */
+var serviceURL = "http://0.0.0.0:8080/";
 
 function loadBook() {
     var xhttp = new XMLHttpRequest();
@@ -9,13 +10,13 @@ function loadBook() {
             displayCD(xhttp);
         }
     };
-    xhttp.open("GET", "http://0.0.0.0:8080/books/", true);
+    xhttp.open("GET", serviceURL+"books/", true);
     xhttp.send();
 }
 
 function deleteBook(bookId) {
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "http://0.0.0.0:8080/deleteBook/"+bookId, true);
+    xhttp.open("POST", serviceURL+"deleteBook/"+bookId, true);
     xhttp.send();
 }
 
@@ -64,7 +65,7 @@ function addBook()
     console.log(bookString);
 
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "http://0.0.0.0:8080/addBook/", true);
+    xhttp.open("POST", serviceURL+"addBook/", true);
     xhttp.send(bookString);
 
 }
