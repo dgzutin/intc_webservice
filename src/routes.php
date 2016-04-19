@@ -1,6 +1,8 @@
 <?php
 // Routes
 
+const booksFile = "books.json";
+
 $app->get('/[{name}]', function ($request, $response, $args) {
     // Sample log message
     $this->logger->info("Slim-Skeleton '/' route");
@@ -14,7 +16,7 @@ $app->get('/books/', function ($request, $response, $args) {
     //$this->logger->info("Slim-Skeleton '/' route");
 
     // REad JSON array from local file
-    $booksString = file_get_contents('./books.json', true);
+    $booksString = file_get_contents(booksFile, true);
     $books = json_decode($booksString);
 
     header('Content-type: application/json');
@@ -29,7 +31,7 @@ $app->get('/book/{id}', function ($request, $response) {
     header('Content-type: application/json');
     header('Access-Control-Allow-Origin: *');
 
-    $booksString = file_get_contents('./books.json', true);
+    $booksString = file_get_contents(booksFile, true);
     $jsonBooks = json_decode($booksString);
     $books = $jsonBooks->books;
 
@@ -49,7 +51,7 @@ $app->post('/deleteBook/{id}', function ($request, $response) {
     header('Content-type: application/json');
 
     $id = $request->getAttribute('id');
-    $booksString = file_get_contents('./books.json', true);
+    $booksString = file_get_contents(booksFile, true);
     $jsonBooks = json_decode($booksString);
     $books = $jsonBooks->books;
 
@@ -59,7 +61,7 @@ $app->post('/deleteBook/{id}', function ($request, $response) {
         if ($book->id == $id){
             unset($books[$i]);
             $jsonBooks = array("books" => array_values($books));
-            if (file_put_contents('./books.json', json_encode($jsonBooks)) != false){
+            if (file_put_contents(booksFile, json_encode($jsonBooks)) != false){
                 $message = array("message" => "Item was deleted",
                     "id" => $id);
                 header('Access-Control-Allow-Origin: *');
@@ -77,7 +79,7 @@ $app->post('/addBook/', function ($request, $response) {
 
 
     $parsedBody = json_decode($request->getBody());
-    $booksString = file_get_contents('./books.json', true);
+    $booksString = file_get_contents(booksFile, true);
     $books = json_decode($booksString)->books;
 
     $highest = 0;
@@ -91,7 +93,7 @@ $app->post('/addBook/', function ($request, $response) {
     array_push($books,$parsedBody);
 
     $jsonBooks = array("books" => array_values($books));
-    if (file_put_contents('./books.json', json_encode($jsonBooks)) != false){
+    if (file_put_contents(booksFile, json_encode($jsonBooks)) != false){
         $message = array("message" => "Item was added");
     }
     else{
