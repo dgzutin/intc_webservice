@@ -1,7 +1,7 @@
 /**
  * Created by garbi on 18.04.16.
  */
-var serviceURL = "http://0.0.0.0:8080/";
+var serviceURL = "http://webservice.e-dispatcher.net/";
 
 function loadBook() {
     var xhttp = new XMLHttpRequest();
@@ -13,13 +13,6 @@ function loadBook() {
     xhttp.open("GET", serviceURL+"books/", true);
     xhttp.send();
 }
-
-function deleteBook(bookId) {
-    var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", serviceURL+"deleteBook/"+bookId, true);
-    xhttp.send();
-}
-
 
 function displayCD(xhttp)
 {
@@ -47,10 +40,21 @@ function displayCD(xhttp)
         row.insertCell(4).innerHTML = '<a href="showBooks.html" onclick="deleteBook('+id+')">Delete</a>';
     }
 }
+// -------------------------------------------------------------
+
+function deleteBook(bookId) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            console.log("Book was deleted");
+        }
+    };
+    xhttp.open("POST", serviceURL+"deleteBook/"+bookId, true);
+    xhttp.send();
+}
 
 function addBook()
 {
-
     title = document.getElementById('titleInput');
     author = document.getElementById('authorInput');
     isbn = document.getElementById('isbnInput');
@@ -62,11 +66,17 @@ function addBook()
     };
     var bookString = JSON.stringify(book);
 
-    console.log(bookString);
 
     var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            document.getElementById("add_success_alert").style.visibility = "visible";
+            console.log(bookString);
+            window.location = "showBooks.html";
+        }
+    };
     xhttp.open("POST", serviceURL+"addBook/", true);
     xhttp.send(bookString);
 
+
 }
-// -------------------------------------------------------------

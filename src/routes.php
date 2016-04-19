@@ -1,7 +1,7 @@
 <?php
 // Routes
 
-const booksFile = "books.json";
+const booksFile = "/home/garbi/projects/lectures/webServices/intc_webservice/db/books.json";
 
 $app->get('/[{name}]', function ($request, $response, $args) {
     // Sample log message
