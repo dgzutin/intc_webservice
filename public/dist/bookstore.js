@@ -12,7 +12,7 @@ function loadBook() {
             displayCD(xhttp);
         }
     };
-    xhttp.open("GET", "http://webservice.e-dispatcher.net/books/", true);
+    xhttp.open("GET", "books.json", true);
     xhttp.send();
 }
 

@@ -1,7 +1,7 @@
 /**
  * Created by garbi on 18.04.16.
  */
-var serviceURL = "http://webservice.e-dispatcher.net/";
+var serviceURL = "http://localhost:8080/";
 
 function loadBook() {
     var xhttp = new XMLHttpRequest();
@@ -71,8 +71,9 @@ function addBook()
     xhttp.onreadystatechange = function() {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
             document.getElementById("add_success_alert").style.visibility = "visible";
-            console.log(bookString);
-            window.location = "showBooks.html";
+            console.log(xhttp.responseText);
+
+            //window.location = "showBooks.html";
         }
     };
     xhttp.open("POST", serviceURL+"addBook/", true);

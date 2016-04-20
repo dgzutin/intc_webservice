@@ -82,6 +82,12 @@ $app->post('/addBook/', function ($request, $response) {
     $booksString = file_get_contents(booksFile, true);
     $books = json_decode($booksString)->books;
 
+    if ($parsedBody->author == null){
+        $message = array("error" => "could not parse json request");
+        header('Access-Control-Allow-Origin: *');
+        return $response->write(json_encode($message));
+    }
+
     $highest = 0;
     foreach ($books as $book){
         if ($highest < $book->id){
@@ -94,7 +100,8 @@ $app->post('/addBook/', function ($request, $response) {
 
     $jsonBooks = array("books" => array_values($books));
     if (file_put_contents(booksFile, json_encode($jsonBooks)) != false){
-        $message = array("message" => "Item was added");
+        $message = array("message" => "Item was added",
+                         "id" => $parsedBody->id);
     }
     else{
         $message = array("message" => "An error occurred");
