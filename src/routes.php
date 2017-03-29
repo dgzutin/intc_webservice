@@ -38,12 +38,15 @@ $app->get('/book/{id}', function ($request, $response) {
     foreach ($books as $book){
 
         if ($book->id == $id){
-            return $response->write(json_encode($book));
+            $book->exception = false;
+            return $response->withJson(json_encode($book));
         }
     }
 
-    $message = array("message" => "Id not found");
-    return $response->write(json_encode($message));
+    $message = array(
+        'exception' => true,
+        'message' => 'Id not found');
+    return $response->withJson(json_encode($message));
 });
 
 $app->post('/deleteBook/{id}', function ($request, $response) {
