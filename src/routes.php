@@ -39,14 +39,14 @@ $app->get('/book/{id}', function ($request, $response) {
 
         if ($book->id == $id){
             $book->exception = false;
-            return $response->withJson(json_encode($book));
+            return $response->withJson($book);
         }
     }
 
     $message = array(
         'exception' => true,
         'message' => 'Id not found');
-    return $response->withJson(json_encode($message));
+    return $response->withJson($message);
 });
 
 $app->post('/deleteBook/{id}', function ($request, $response) {
