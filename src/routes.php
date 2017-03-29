@@ -24,6 +24,7 @@ $app->get('/books/', function ($request, $response, $args) {
 
     if ($books != null){
         $books->exception = false;
+        $books->message = count($books->books).' books found.';
         return $response->withJson($books);
     }
     $books['exception'] = true;
