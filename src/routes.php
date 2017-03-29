@@ -71,30 +71,36 @@ $app->post('/deleteBook/{id}', function ($request, $response) {
             unset($books[$i]);
             $jsonBooks = array("books" => array_values($books));
             if (file_put_contents(DB_FILE_PATH, json_encode($jsonBooks)) != false){
-                $message = array("message" => "Item was deleted",
-                    "id" => $id);
+                $message = array(
+                    'exception' => false,
+                    'message' => "Item was deleted",
+                    'id' => $id);
                 header('Access-Control-Allow-Origin: *');
                 return $response->write(json_encode($message));
             }
         }
         $i++;
     }
-    $message = array("message" => "Id not found");
+    $message = array(
+        'exception' => true,
+        'message' => "Id not found");
     header('Access-Control-Allow-Origin: *');
-    return $response->write(json_encode($message));
+    return $response->withJson($message);
 });
 
 $app->post('/addBook/', function ($request, $response) {
-
 
     $parsedBody = json_decode($request->getBody());
     $booksString = file_get_contents(DB_FILE_PATH, true);
     $books = json_decode($booksString)->books;
 
     if ($parsedBody->author == null){
-        $message = array("error" => "could not parse json request");
+        $message = array(
+            'exception' => true,
+            'message' => "could not parse json request");
+
         header('Access-Control-Allow-Origin: *');
-        return $response->write(json_encode($message));
+        return $response->withJson($message);
     }
 
     $highest = 0;
@@ -109,13 +115,18 @@ $app->post('/addBook/', function ($request, $response) {
 
     $jsonBooks = array("books" => array_values($books));
     if (file_put_contents(DB_FILE_PATH, json_encode($jsonBooks)) != false){
-        $message = array("message" => "Item was added",
-                         "id" => $parsedBody->id);
+        $message = array(
+            'exception' => false,
+            'message' => "Item was added",
+            'id' => $parsedBody->id);
     }
     else{
-        $message = array("message" => "An error occurred");
+        $message = array(
+            'exception' => true,
+            'message' => "An error occurred. Could not open json file");
     }
+
     header('Access-Control-Allow-Origin: *');
-    return $response->write(json_encode($message));
+    return $response->withJson($message);
 });
 
